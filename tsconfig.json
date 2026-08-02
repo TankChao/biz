@@ -1,0 +1,27 @@
+{
+    "include": [
+        "src"
+    ],
+    "compilerOptions": {
+        "jsx": "react-jsx",
+        "sourceMap": true,
+        "forceConsistentCasingInFileNames": true,
+        "declaration": true,
+        "module": "ESNext",
+        "paths": {
+            "@kachina/biz/*": ["./src/*"],
+            "@kachina/biz": ["./src/index.ts"],
+            "@@/*": ["./.dumi/*"]
+        },
+        "moduleResolution": "bundler",
+        "skipLibCheck": true,
+        "strict": true,
+        "target": "ES2020",
+        "rootDir": "src",
+        "outDir": "lib",
+        "esModuleInterop": true,
+    "declarationMap": true
+    }
+}
+
+
