@@ -2,6 +2,8 @@ import { defineConfig } from 'dumi';
 
 export default defineConfig({
   outputPath: 'distDumi',
+  base: '/biz/',
+  publicPath: '/biz/',
   themeConfig: {
     name: '@kachina/biz',
     socialLinks: {
