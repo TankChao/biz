@@ -1,4 +1,4 @@
-export { default as setOperateConfig } from './setOperateConfig';
+export { default as createOperate } from './createOperate';
 
 export type {
   ValueType,

@@ -2,7 +2,7 @@ import { createContext } from 'react';
 import type { ComponentType, ReactNode, Context } from 'react';
 import type { ContentProps, FieldNames, TouchType, ValueType } from './types';
 
-/** setOperateConfig 提供的配置上下文 */
+/** createOperate 提供的配置上下文 */
 export interface OperateConfigContextValue {
   content: ComponentType<ContentProps>;
   fieldNames: FieldNames;
@@ -53,7 +53,7 @@ export interface OperateContexts {
 /**
  * 创建一对全新的 Context。
  *
- * 每个 setOperateConfig 生成一个配置化组件时都应调用一次，使不同组件拥有
+ * 每个 createOperate 生成一个配置化组件时都应调用一次，使不同组件拥有
  * 各自独立的上下文，从根本上避免配置相互串用。传入 config 时，
  * ConfigContext 的默认值即为该配置，无需再包裹 Provider。
  */

@@ -89,7 +89,7 @@ function computeSelectOptions(
 /**
  * 创建 Operate.Item 组件。
  *
- * 传入属于同一配置的一对 Context，使不同 setOperateConfig 生成的组件
+ * 传入属于同一配置的一对 Context，使不同 createOperate 生成的组件
  * 拥有完全独立的上下文，互不串扰。
  */
 export function createOperateItem(
@@ -115,7 +115,7 @@ export function createOperateItem(
       defaultOptions,
     } = props;
 
-    // ── 合并配置：Item > Parent > setOperateConfig ──
+    // ── 合并配置：Item > Parent > createOperate ──
     const touchType =
       parentCtx?.mergedTouchType ?? configCtx?.touchType ?? 'button';
     const valueType =
@@ -163,7 +163,7 @@ export function createOperateItem(
     if (!fieldNames) {
       if (process.env.NODE_ENV === 'development') {
         console.error(
-          '[Operate.Item] fieldNames 未配置，请通过 setOperateConfig 设置 fieldNames。',
+          '[Operate.Item] fieldNames 未配置，请通过 createOperate 设置 fieldNames。',
         );
       }
       return null;

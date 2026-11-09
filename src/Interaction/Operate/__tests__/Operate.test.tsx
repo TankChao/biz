@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import setOperateConfig from '../setOperateConfig';
+import createOperate from '../createOperate';
 import type { ContentProps } from '../types';
 
 // Mock antd 组件
@@ -68,9 +68,9 @@ const MockContent: React.FC<ContentProps> = ({ open, closeModal, setFooter, onCh
 );
 
 describe('Operate 组件', () => {
-  describe('setOperateConfig', () => {
+  describe('createOperate', () => {
     it('应返回带有 Parent 和 Item 属性的配置化组件', () => {
-      const ConfiguredOperate = setOperateConfig({
+      const ConfiguredOperate = createOperate({
         content: MockContent,
         fieldNames: { label: 'label', value: 'value' },
       });
@@ -82,7 +82,7 @@ describe('Operate 组件', () => {
   });
 
   describe('Operate 便捷组件 - button 模式', () => {
-    const ConfiguredOperate = setOperateConfig({
+    const ConfiguredOperate = createOperate({
       content: MockContent,
       fieldNames: { label: 'label', value: 'value' },
     });
@@ -127,7 +127,7 @@ describe('Operate 组件', () => {
   });
 
   describe('Operate.Parent + Operate.Item 组合', () => {
-    const ConfiguredOperate = setOperateConfig({
+    const ConfiguredOperate = createOperate({
       content: MockContent,
       fieldNames: { label: 'label', value: 'value' },
     });
@@ -161,11 +161,11 @@ describe('Operate 组件', () => {
       <div data-testid="content-b">{params?.label}</div>
     );
 
-    const OperateA = setOperateConfig({
+    const OperateA = createOperate({
       content: ContentA,
       fieldNames: { label: 'label', value: 'value' },
     });
-    const OperateB = setOperateConfig({
+    const OperateB = createOperate({
       content: ContentB,
       fieldNames: { label: 'label', value: 'value' },
     });
@@ -203,7 +203,7 @@ describe('Operate 组件', () => {
     });
   });
   describe('Operate.Item - select 模式', () => {
-    const ConfiguredOperate = setOperateConfig({
+    const ConfiguredOperate = createOperate({
       content: MockContent,
       fieldNames: { label: 'name', value: 'id' },
       touchType: 'select',
@@ -222,7 +222,7 @@ describe('Operate 组件', () => {
   });
 
   describe('弹窗交互', () => {
-    const ConfiguredOperate = setOperateConfig({
+    const ConfiguredOperate = createOperate({
       content: MockContent,
       fieldNames: { label: 'label', value: 'value' },
     });

@@ -16,7 +16,7 @@ import {
 /**
  * 创建 Operate.Parent 组件。
  *
- * 传入属于同一配置的一对 Context，使不同 setOperateConfig 生成的组件
+ * 传入属于同一配置的一对 Context，使不同 createOperate 生成的组件
  * 拥有完全独立的上下文，互不串扰。
  */
 export function createOperateParent(
@@ -36,12 +36,12 @@ export function createOperateParent(
     if (process.env.NODE_ENV === 'development') {
       if (!config) {
         console.error(
-          '[Operate] Operate.Parent 必须在 setOperateConfig 创建的组件内使用。',
+          '[Operate] Operate.Parent 必须在 createOperate 创建的组件内使用。',
         );
       }
     }
 
-    // ── 合并配置：Parent props > setOperateConfig ──
+    // ── 合并配置：Parent props > createOperate ──
     const mergedTouchType = touchType ?? config?.touchType ?? 'button';
     const mergedValueType = config?.valueType ?? 'Key';
     const mergedMultiple = multiple ?? config?.multiple ?? false;

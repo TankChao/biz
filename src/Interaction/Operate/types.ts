@@ -32,11 +32,11 @@ export interface ContentProps {
   params: any;
 }
 
-/** setOperateConfig 的配置参数 */
+/** createOperate 的配置参数 */
 export interface OperateConfig {
-  /** 弹窗中的内容组件（只能通过 setOperateConfig 设置，不可被覆盖） */
+  /** 弹窗中的内容组件（只能通过 createOperate 设置，不可被覆盖） */
   content: ComponentType<ContentProps>;
-  /** 字段映射配置（只能通过 setOperateConfig 设置，不可被覆盖） */
+  /** 字段映射配置（只能通过 createOperate 设置，不可被覆盖） */
   fieldNames: FieldNames;
   /** 弹窗标题 */
   titleModal?: ReactNode;
@@ -94,7 +94,7 @@ export interface OperateItemProps {
 /** Operate 便捷组件的 Props（Parent + Item 的合并） */
 export interface OperateProps extends OperateParentProps, OperateItemProps {}
 
-/** setOperateConfig 返回的配置化组件类型 */
+/** createOperate 返回的配置化组件类型 */
 export interface ConfiguredOperateComponent {
   (props: OperateProps): ReactElement;
   Parent: ComponentType<OperateParentProps>;

@@ -3,7 +3,7 @@
  */
 import React from "react";
 import { Form, Button, Input, Descriptions } from "antd";
-import { setOperateConfig } from "@kachina/biz";
+import { createOperate } from "@kachina/biz";
 import type { ContentProps } from "@kachina/biz";
 
 const roleList = [
@@ -46,7 +46,7 @@ const RoleSelectContent = ({ onChange, closeModal }: ContentProps) => {
   );
 };
 
-const RoleOperate = setOperateConfig({
+const RoleOperate = createOperate({
   content: RoleSelectContent,
   fieldNames: { label: "roleName", value: "roleId" },
   touchType: "select",

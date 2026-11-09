@@ -3,7 +3,7 @@
  */
 import React, { useState } from "react";
 import { Button, Descriptions, Divider } from "antd";
-import { setOperateConfig } from "@kachina/biz";
+import { createOperate } from "@kachina/biz";
 import type { ContentProps } from "@kachina/biz";
 
 const productList = [
@@ -56,7 +56,7 @@ const ProductSelectContent = ({ onChange, closeModal }: ContentProps) => {
   );
 };
 
-const ProductOperate = setOperateConfig({
+const ProductOperate = createOperate({
   content: ProductSelectContent,
   fieldNames: { label: "productName", value: "sku" },
   touchType: "select",

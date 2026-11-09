@@ -16,12 +16,12 @@ import type {
  * 工厂函数：通过配置 content、fieldNames 等生成一个操作类组件。
  *
  * 每次调用都会创建一组完全独立的 Context（配置 Context + Parent Context），
- * 因此不同 setOperateConfig 生成的组件互不串扰，可以任意嵌套使用。
+ * 因此不同 createOperate 生成的组件互不串扰，可以任意嵌套使用。
  *
  * @param configData   配置数据（content / fieldNames 不可被后续覆盖）
  *
  * @example
- * const MyOperate = setOperateConfig({
+ * const MyOperate = createOperate({
  *   content: MyContent,
  *   fieldNames: { label: 'name', value: 'id' },
  * });
@@ -32,7 +32,7 @@ import type {
  * // 组合用法
  * <MyOperate.Parent><MyOperate.Item /></MyOperate.Parent>
  */
-function setOperateConfig(
+function createOperate(
   configData: OperateConfig,
 ): ConfiguredOperateComponent {
   // ── 开发环境校验 ──
@@ -83,4 +83,4 @@ function setOperateConfig(
   return ConfiguredOperate;
 }
 
-export default setOperateConfig;
+export default createOperate;

@@ -167,14 +167,14 @@ export default () => {
 
 ## Operate
 
-工厂化操作组件，通过 `setOperateConfig` 注入 `content` 和 `fieldNames` 后即可生成一个业务操作组件。用户通过点击触发元素（Button / Select）弹出 Modal 进行操作，兼容 Form 表单的 `value` / `onChange`。
+工厂化操作组件，通过 `createOperate` 注入 `content` 和 `fieldNames` 后即可生成一个业务操作组件。用户通过点击触发元素（Button / Select）弹出 Modal 进行操作，兼容 Form 表单的 `value` / `onChange`。
 
 **后续生成的所有业务组件共享一套 API，开发只需要熟练掌握一套 API，即可熟练使用所有衍生组件。**
 
 ### 基本使用
 
 ```tsx
-import { Operate, setOperateConfig } from '@kachina/biz';
+import { Operate, createOperate } from '@kachina/biz';
 
 // 1. 定义弹窗内容组件
 const MyContent: React.FC<ContentProps> = ({ open, closeModal, onChange }) => {
@@ -182,8 +182,8 @@ const MyContent: React.FC<ContentProps> = ({ open, closeModal, onChange }) => {
   return <div>...</div>;
 };
 
-// 2. 通过 setOperateConfig 生成业务组件
-const MyOperate = setOperateConfig(Operate, {
+// 2. 通过 createOperate 生成业务组件
+const MyOperate = createOperate(Operate, {
   content: MyContent,
   fieldNames: { label: 'name', value: 'id' },
   touchType: 'button',
@@ -198,10 +198,10 @@ export default () => (
 
 ### API
 
-#### setOperateConfig
+#### createOperate
 
 ```ts
-function setOperateConfig(
+function createOperate(
   BaseOperate: typeof Operate,
   configData: OperateConfig,
 ): ConfiguredOperateComponent;
@@ -252,17 +252,17 @@ function setOperateConfig(
 
 #### 优先级
 
-当 `Operate.Item`、`Operate.Parent`、`setOperateConfig` 存在相同参数时：
+当 `Operate.Item`、`Operate.Parent`、`createOperate` 存在相同参数时：
 
 - `Operate.Item` 权重最大
 - `Operate.Parent` / `Operate` 次之
-- `setOperateConfig` 权重最小
+- `createOperate` 权重最小
 
-`content` 和 `fieldNames` 只能通过 `setOperateConfig` 设置，不可被覆盖。
+`content` 和 `fieldNames` 只能通过 `createOperate` 设置，不可被覆盖。
 
 ### 注意事项
 
-1. 必须通过 `setOperateConfig` 注入 `content` 和 `fieldNames` 后才能使用
+1. 必须通过 `createOperate` 注入 `content` 和 `fieldNames` 后才能使用
 2. `fieldNames.value` 对应的字段在数据中必须具有唯一性
 3. 多选模式下，`valueType` 必须为 `'Key[]'` 或 `'Item[]'`
 4. 当 `touchType` 为 `'select'` 时，`fieldNames.label` 和 `fieldNames.value` 必须有值

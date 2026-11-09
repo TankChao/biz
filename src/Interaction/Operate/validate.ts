@@ -44,21 +44,21 @@ export function validateFieldNamesForSelect(
   }
 }
 
-/** 校验 setOperateConfig 的配置 */
+/** 校验 createOperate 的配置 */
 export function validateConfig(config: OperateConfig): void {
   if (!config.content) {
-    console.error('[Operate] setOperateConfig: content 必须提供。');
+    console.error('[Operate] createOperate: content 必须提供。');
   }
   if (!config.fieldNames) {
-    console.error('[Operate] setOperateConfig: fieldNames 必须提供。');
+    console.error('[Operate] createOperate: fieldNames 必须提供。');
   }
   const vt = config.valueType ?? 'Key';
   const ml = config.multiple ?? false;
   const tt = config.touchType ?? 'button';
 
-  validateValueType(vt, 'setOperateConfig');
-  validateMultipleValueType(ml, vt, 'setOperateConfig');
+  validateValueType(vt, 'createOperate');
+  validateMultipleValueType(ml, vt, 'createOperate');
   if (config.fieldNames) {
-    validateFieldNamesForSelect(tt, config.fieldNames, 'setOperateConfig');
+    validateFieldNamesForSelect(tt, config.fieldNames, 'createOperate');
   }
 }

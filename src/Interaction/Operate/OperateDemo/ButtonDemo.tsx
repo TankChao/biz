@@ -3,7 +3,7 @@
  */
 import React, { useEffect } from "react";
 import { Table, Button, Space, Tag } from "antd";
-import { setOperateConfig } from "@kachina/biz";
+import { createOperate } from "@kachina/biz";
 import type { ContentProps } from "@kachina/biz";
 
 const mockData = [
@@ -52,12 +52,12 @@ const DetailContent1 = ({ params, closeModal, setFooter, disabled }: ContentProp
   );
 };
 
-const MyOperate = setOperateConfig({
+const MyOperate = createOperate({
   content: DetailContent,
   fieldNames: { label: "name", value: "id" },
 });
 
-const MyOperate1 = setOperateConfig({
+const MyOperate1 = createOperate({
   content: DetailContent1,
   fieldNames: { label: "name", value: "id" },
 });
