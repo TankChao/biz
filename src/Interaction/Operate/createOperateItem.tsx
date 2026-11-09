@@ -1,6 +1,7 @@
 import React, { useCallback, useContext } from 'react';
 import type { Context } from 'react';
 import { Button, Select } from 'antd';
+import { SearchOutlined } from '@ant-design/icons';
 import TagRender from './TagRender';
 import type {
   OperateConfigContextValue,
@@ -208,6 +209,7 @@ export function createOperateItem(
 
     return (
       <Select
+        suffixIcon={<SearchOutlined style={{ fontSize: 18 }} />}
         {...selectProps}
         allowClear={!disabled}
         open={false}
