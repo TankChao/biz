@@ -16,39 +16,6 @@ toc: content
 
 当需要将日期选择器的值以字符串形式（而非 dayjs 对象）管理时，使用此组件。适用于表单值统一为 `string` 类型的场景，避免在组件外部手动进行 dayjs ↔ string 的转换。
 
-## 基本使用
-
-```tsx
-import { DatePicker } from '@kachina/biz';
-
-export default () => <DatePicker style={{ width: 200 }} />;
-```
-
-## 月份选择
-
-```tsx
-import { DatePicker } from '@kachina/biz';
-
-export default () => <DatePicker picker="month" style={{ width: 200 }} />;
-```
-
-## 年份选择
-
-```tsx
-import { DatePicker } from '@kachina/biz';
-
-export default () => <DatePicker picker="year" style={{ width: 200 }} />;
-```
-
-## 自定义格式
-
-```tsx
-import { DatePicker } from '@kachina/biz';
-
-export default () => (
-  <DatePicker format="YYYY/MM/DD" style={{ width: 200 }} />
-);
-```
 
 ## 受控模式
 
@@ -69,6 +36,78 @@ export default () => {
       />
       <div style={{ marginTop: 8 }}>当前值：{value || '未选择'}</div>
     </div>
+  );
+};
+```
+
+## Form 表单集成
+
+
+```tsx
+import { DatePicker } from '@kachina/biz';
+import { Form, Button, Descriptions } from 'antd';
+
+export default () => {
+  const [form] = Form.useForm();
+
+  const handleFinish = (values: any) => {
+    console.log('表单提交:', values);
+  };
+
+  return (
+    <Form
+      form={form}
+      layout="vertical"
+      onFinish={handleFinish}
+      initialValues={{
+        birthday: '',
+        joinDate: '',
+        reviewYear: '',
+        reviewYearEnd: '2030'
+      }}
+      style={{ maxWidth: 480 }}
+    >
+      <Form.Item name="birthday" label="出生日期" rules={[{ required: true, message: '请选择出生日期' }]}>
+        <DatePicker style={{ width: '100%' }} placeholder="请选择日期" />
+      </Form.Item>
+
+      <Form.Item name="joinDate" label="入职日期">
+        <DatePicker style={{ width: '100%' }} placeholder="请选择日期" />
+      </Form.Item>
+
+      <Form.Item name="reviewYear" label="考核年份">
+        <DatePicker picker="year" style={{ width: '100%' }} placeholder="请选择年份" />
+      </Form.Item>
+
+      <Form.Item name="reviewYearEnd" label="考核结束年份">
+        <DatePicker picker="year" style={{ width: '100%' }} disabled />
+      </Form.Item>
+
+      <Form.Item>
+        <Button type="primary" htmlType="submit">
+          提交
+        </Button>
+      </Form.Item>
+
+      <Form.Item noStyle shouldUpdate>
+        {({ getFieldsValue }) => {
+          const values = getFieldsValue();
+          return (
+            <Descriptions title="表单值" bordered size="small" column={1}>
+              <Descriptions.Item label="birthday">
+                {values.birthday || '未选择'}
+              </Descriptions.Item>
+              <Descriptions.Item label="joinDate">
+                {values.joinDate || '未选择'}
+              </Descriptions.Item>
+              <Descriptions.Item label="reviewYear">
+                {values.reviewYear || '未选择'}
+              </Descriptions.Item>
+            </Descriptions>
+          );
+        }}
+      </Form.Item>
+    </Form>
   );
 };
 ```
