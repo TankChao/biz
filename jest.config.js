@@ -2,11 +2,16 @@
 module.exports = {
   testEnvironment: 'jsdom',
 
+  // Transform ES modules from node_modules for Ant Design packages
+  transformIgnorePatterns: [
+    'node_modules/(?!(@ant-design|antd)/)',
+  ],
+
   // ?? src ????????????
   roots: ['<rootDir>/src'],
 
   transform: {
-    '^.+\\.tsx?$': [
+    '^.+\\.(ts|tsx|js|jsx)$': [
       require.resolve('ts-jest'),
       {
         tsconfig: {
@@ -16,6 +21,7 @@ module.exports = {
           esModuleInterop: true,
           strict: true,
           target: 'ES2020',
+          allowJs: true,
         },
       },
     ],
