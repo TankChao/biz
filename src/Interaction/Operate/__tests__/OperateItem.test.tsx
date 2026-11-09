@@ -1,10 +1,12 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import OperateItem from '../OperateItem';
+import { createOperateItem } from '../OperateItem';
 import { OperateConfigContext, OperateParentContext } from '../context';
 import type { OperateConfigContextValue, OperateParentContextValue } from '../context';
 import type { FieldNames } from '../types';
+
+const OperateItem = createOperateItem(OperateConfigContext, OperateParentContext);
 
 // ── Mock antd ──
 jest.mock('antd', () => {

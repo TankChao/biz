@@ -1,24 +1,27 @@
-import React from 'react';
-import { OperateConfigContext } from './context';
-import OperateParent from './OperateParent';
-import OperateItem from './OperateItem';
-import Operate from './Operate';
+import React, { useContext } from 'react';
+import { createOperate } from './Operate';
+import { createOperateParent } from './OperateParent';
+import { createOperateItem } from './OperateItem';
+import { createOperateContexts } from './context';
 import { validateConfig } from './validate';
 import type {
   OperateConfig,
   OperateProps,
   OperateParentProps,
+  OperateItemProps,
   ConfiguredOperateComponent,
 } from './types';
 
 /**
  * 工厂函数：通过配置 content、fieldNames 等生成一个操作类组件。
  *
- * @param _BaseOperate 基础 Operate 组件
+ * 每次调用都会创建一组完全独立的 Context（配置 Context + Parent Context），
+ * 因此不同 setOperateConfig 生成的组件互不串扰，可以任意嵌套使用。
+ *
  * @param configData   配置数据（content / fieldNames 不可被后续覆盖）
  *
  * @example
- * const MyOperate = setOperateConfig(Operate, {
+ * const MyOperate = setOperateConfig({
  *   content: MyContent,
  *   fieldNames: { label: 'name', value: 'id' },
  * });
@@ -30,7 +33,6 @@ import type {
  * <MyOperate.Parent><MyOperate.Item /></MyOperate.Parent>
  */
 function setOperateConfig(
-  _BaseOperate: typeof Operate,
   configData: OperateConfig,
 ): ConfiguredOperateComponent {
   // ── 开发环境校验 ──
@@ -38,33 +40,45 @@ function setOperateConfig(
     validateConfig(configData);
   }
 
-  // ── 配置 Provider ──
-  const ConfigProvider: React.FC<{ children: React.ReactNode }> = ({
-    children,
-  }) => (
-    <OperateConfigContext.Provider value={configData}>
-      {children}
-    </OperateConfigContext.Provider>
-  );
+  // ── 每个配置化组件拥有自己独立的 Context，互不串扰 ──
+  const { ConfigContext, ParentContext } = createOperateContexts(configData);
 
-  // ── 配置化的 Operate 便捷组件 ──
-  const ConfiguredOperate = ((props: OperateProps) => (
-    <ConfigProvider>
-      <Operate {...props} />
-    </ConfigProvider>
-  )) as ConfiguredOperateComponent;
+  const MyOperateParent = createOperateParent(ConfigContext, ParentContext);
+  const MyOperateItem = createOperateItem(ConfigContext, ParentContext);
+
+  // ── 配置化的 Operate 便捷组件（Parent + Item） ──
+  const ConfiguredOperate = createOperate(
+    MyOperateParent,
+    MyOperateItem,
+  ) as ConfiguredOperateComponent;
 
   // ── 配置化的 Parent ──
   const ConfiguredParent: React.FC<OperateParentProps> = (
     props: OperateParentProps,
-  ) => (
-    <ConfigProvider>
-      <OperateParent {...props} />
-    </ConfigProvider>
-  );
+  ) => <MyOperateParent {...props} />;
+
+  /**
+   * 配置化的 Item。
+   *
+   * - 若 Item 已处于本配置的 Parent 内，则复用该 Parent 的弹窗（多个触发器共享一个 Modal）；
+   * - 否则自动补一个本配置的 Parent，保证 Item 永远只使用自己这份配置。
+   */
+  const ConfiguredItem: React.FC<OperateItemProps> = (props: OperateItemProps) => {
+    const parentCtx = useContext(ParentContext);
+
+    if (parentCtx) {
+      return <MyOperateItem {...props} />;
+    }
+
+    return (
+      <MyOperateParent>
+        <MyOperateItem {...props} />
+      </MyOperateParent>
+    );
+  };
 
   ConfiguredOperate.Parent = ConfiguredParent;
-  ConfiguredOperate.Item = OperateItem;
+  ConfiguredOperate.Item = ConfiguredItem;
 
   return ConfiguredOperate;
 }

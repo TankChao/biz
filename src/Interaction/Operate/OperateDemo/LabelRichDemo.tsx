@@ -3,7 +3,7 @@
  */
 import React, { useState } from "react";
 import { Tag, Descriptions, Button } from "antd";
-import { setOperateConfig, Operate } from "@kachina/biz";
+import { setOperateConfig } from "@kachina/biz";
 import type { ContentProps } from "@kachina/biz";
 
 const accountList = [
@@ -46,7 +46,7 @@ const AccountSelectContent = ({ onChange, closeModal }: ContentProps) => {
   );
 };
 
-const AccountOperate = setOperateConfig(Operate, {
+const AccountOperate = setOperateConfig({
   content: AccountSelectContent,
   fieldNames: {
     label: "acctName",

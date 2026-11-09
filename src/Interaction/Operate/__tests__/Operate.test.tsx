@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Operate from '../Operate';
 import setOperateConfig from '../setOperateConfig';
 import type { ContentProps } from '../types';
 
@@ -71,7 +70,7 @@ const MockContent: React.FC<ContentProps> = ({ open, closeModal, setFooter, onCh
 describe('Operate 组件', () => {
   describe('setOperateConfig', () => {
     it('应返回带有 Parent 和 Item 属性的配置化组件', () => {
-      const ConfiguredOperate = setOperateConfig(Operate, {
+      const ConfiguredOperate = setOperateConfig({
         content: MockContent,
         fieldNames: { label: 'label', value: 'value' },
       });
@@ -83,7 +82,7 @@ describe('Operate 组件', () => {
   });
 
   describe('Operate 便捷组件 - button 模式', () => {
-    const ConfiguredOperate = setOperateConfig(Operate, {
+    const ConfiguredOperate = setOperateConfig({
       content: MockContent,
       fieldNames: { label: 'label', value: 'value' },
     });
@@ -128,7 +127,7 @@ describe('Operate 组件', () => {
   });
 
   describe('Operate.Parent + Operate.Item 组合', () => {
-    const ConfiguredOperate = setOperateConfig(Operate, {
+    const ConfiguredOperate = setOperateConfig({
       content: MockContent,
       fieldNames: { label: 'label', value: 'value' },
     });
@@ -154,8 +153,57 @@ describe('Operate 组件', () => {
     });
   });
 
+  describe('多个配置化组件相互隔离', () => {
+    const ContentA: React.FC<ContentProps> = ({ params }) => (
+      <div data-testid="content-a">{params?.label}</div>
+    );
+    const ContentB: React.FC<ContentProps> = ({ params }) => (
+      <div data-testid="content-b">{params?.label}</div>
+    );
+
+    const OperateA = setOperateConfig({
+      content: ContentA,
+      fieldNames: { label: 'label', value: 'value' },
+    });
+    const OperateB = setOperateConfig({
+      content: ContentB,
+      fieldNames: { label: 'label', value: 'value' },
+    });
+
+    it('不同配置的 Item 应绑定各自的配置，互不串扰', () => {
+      render(
+        <OperateA.Parent titleModal="A 弹窗">
+          <OperateA.Item>A 按钮</OperateA.Item>
+          <OperateB.Item>B 按钮</OperateB.Item>
+        </OperateA.Parent>,
+      );
+
+      // B 按钮应打开 B 配置的弹窗，而不是 A 的
+      fireEvent.click(screen.getByText('B 按钮'));
+      expect(screen.getByTestId('content-b')).toBeInTheDocument();
+      expect(screen.queryByTestId('content-a')).not.toBeInTheDocument();
+
+      // A 按钮仍应打开 A 配置的弹窗
+      fireEvent.click(screen.getByText('A 按钮'));
+      expect(screen.getByTestId('content-a')).toBeInTheDocument();
+    });
+
+    it('同一配置下的多个 Item 应共享同一个 Parent 弹窗', () => {
+      render(
+        <OperateA.Parent titleModal="A 弹窗">
+          <OperateA.Item>A1 按钮</OperateA.Item>
+          <OperateA.Item>A2 按钮</OperateA.Item>
+        </OperateA.Parent>,
+      );
+
+      fireEvent.click(screen.getByText('A1 按钮'));
+      fireEvent.click(screen.getByText('A2 按钮'));
+      expect(screen.getAllByTestId('operate-modal')).toHaveLength(1);
+      expect(screen.getByTestId('content-a')).toBeInTheDocument();
+    });
+  });
   describe('Operate.Item - select 模式', () => {
-    const ConfiguredOperate = setOperateConfig(Operate, {
+    const ConfiguredOperate = setOperateConfig({
       content: MockContent,
       fieldNames: { label: 'name', value: 'id' },
       touchType: 'select',
@@ -174,7 +222,7 @@ describe('Operate 组件', () => {
   });
 
   describe('弹窗交互', () => {
-    const ConfiguredOperate = setOperateConfig(Operate, {
+    const ConfiguredOperate = setOperateConfig({
       content: MockContent,
       fieldNames: { label: 'label', value: 'value' },
     });

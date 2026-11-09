@@ -3,7 +3,7 @@
  */
 import React from "react";
 import { Space, Button } from "antd";
-import { setOperateConfig, Operate } from "@kachina/biz";
+import { setOperateConfig } from "@kachina/biz";
 import type { ContentProps } from "@kachina/biz";
 
 const InfoContent = ({ params, closeModal, disabled }: ContentProps) => (
@@ -14,7 +14,7 @@ const InfoContent = ({ params, closeModal, disabled }: ContentProps) => (
   </div>
 );
 
-const InfoOperate = setOperateConfig(Operate, {
+const InfoOperate = setOperateConfig({
   content: InfoContent,
   fieldNames: { label: "label", value: "id" },
   touchType: "button",

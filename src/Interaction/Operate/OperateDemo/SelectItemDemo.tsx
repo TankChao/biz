@@ -3,7 +3,7 @@
  */
 import React, { useState } from "react";
 import { Button, Descriptions } from "antd";
-import { setOperateConfig, Operate } from "@kachina/biz";
+import { setOperateConfig } from "@kachina/biz";
 import type { ContentProps } from "@kachina/biz";
 
 const employeeList = [
@@ -52,7 +52,7 @@ const EmployeeSelectContent = ({ onChange, closeModal, multiple }: ContentProps)
   );
 };
 
-const EmployeeOperate = setOperateConfig(Operate, {
+const EmployeeOperate = setOperateConfig({
   content: EmployeeSelectContent,
   fieldNames: { label: "empName", value: "empId" },
   touchType: "select",

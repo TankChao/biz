@@ -3,7 +3,7 @@
  */
 import React, { useState } from "react";
 import { Button, Descriptions } from "antd";
-import { setOperateConfig, Operate } from "@kachina/biz";
+import { setOperateConfig } from "@kachina/biz";
 import type { ContentProps } from "@kachina/biz";
 
 const cityList = [
@@ -48,7 +48,7 @@ const CitySelectContent = ({ onChange, closeModal }: ContentProps) => {
   );
 };
 
-const CityOperate = setOperateConfig(Operate, {
+const CityOperate = setOperateConfig({
   content: CitySelectContent,
   fieldNames: { label: "cityName", value: "cityCode" },
   touchType: "select",

@@ -3,7 +3,7 @@
  */
 import React, { useState } from "react";
 import { Button, Descriptions, Divider } from "antd";
-import { setOperateConfig, Operate } from "@kachina/biz";
+import { setOperateConfig } from "@kachina/biz";
 import type { ContentProps } from "@kachina/biz";
 
 const roleList = [
@@ -59,7 +59,7 @@ const RoleSelectContent = ({ onChange, closeModal, disabled }: ContentProps) => 
   );
 };
 
-const RoleOperate = setOperateConfig(Operate, {
+const RoleOperate = setOperateConfig({
   content: RoleSelectContent,
   fieldNames: { label: "roleName", value: "roleCode" },
   touchType: "select",

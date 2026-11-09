@@ -75,14 +75,12 @@ value 类型为基础类型（Key），需要传入 `defaultOptions` 用于页�
 
 ```ts
 function setOperateConfig(
-  BaseOperate: typeof Operate,
   configData: OperateConfig,
 ): ConfiguredOperateComponent;
 ```
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| BaseOperate | 基础 Operate 组件 | `typeof Operate` | - |
 | configData | 配置数据 | `OperateConfig` | - |
 
 ### OperateConfig
@@ -161,6 +159,7 @@ function setOperateConfig(
 3. 多选模式下，`valueType` 必须为 `'Key[]'` 或 `'Item[]'`
 4. 当 `touchType` 为 `'select'` 时，`fieldNames.label` 和 `fieldNames.value` 必须有值
 5. 当 `valueType` 为 `'Key'` 或 `'Key[]'` 时，需要传入 `defaultOptions` 用于初始化反显
+6. 多个 `setOperateConfig` 生成的组件相互独立，即使嵌套在不同 Parent 中使用，`Item` 也只会绑定自己这份配置，不会串用其他组件的弹窗内容
 
 
 
