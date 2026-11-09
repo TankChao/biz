@@ -1,6 +1,6 @@
 {
   "name": "@kachina/biz",
-  "version": "0.0.1-beta.3",
+  "version": "0.0.1-beta.4",
   "description": "基于 antd v6 的业务组件库",
   "main": "lib/index.js",
   "module": "es/index.js",
