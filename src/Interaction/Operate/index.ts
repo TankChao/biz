@@ -1,4 +1,3 @@
-export { createOperate } from './Operate';
 export { default as setOperateConfig } from './setOperateConfig';
 
 export type {

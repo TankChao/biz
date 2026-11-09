@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import { createOperate } from './Operate';
-import { createOperateParent } from './OperateParent';
-import { createOperateItem } from './OperateItem';
+import { createOperateIndependent } from './createOperateIndependent';
+import { createOperateParent } from './createOperateParent';
+import { createOperateItem } from './createOperateItem';
 import { createOperateContexts } from './context';
 import { validateConfig } from './validate';
 import type {
@@ -47,7 +47,7 @@ function setOperateConfig(
   const MyOperateItem = createOperateItem(ConfigContext, ParentContext);
 
   // ── 配置化的 Operate 便捷组件（Parent + Item） ──
-  const ConfiguredOperate = createOperate(
+  const ConfiguredOperate = createOperateIndependent(
     MyOperateParent,
     MyOperateItem,
   ) as ConfiguredOperateComponent;

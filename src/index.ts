@@ -10,7 +10,7 @@ export { default as DatePicker } from './DataEntry/DatePicker/index';
 export type { DatePickerProps, DatePickerPickerType } from './DataEntry/DatePicker/index';
 
 // 交互组件
-export { createOperate, setOperateConfig } from './Interaction/Operate';
+export { setOperateConfig } from './Interaction/Operate';
 export type {
   ValueType,
   TouchType,

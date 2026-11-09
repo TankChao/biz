@@ -11,7 +11,7 @@ import type {
  * @param BaseOperateParent 与 Item 共享同一对 Context 的 Parent 组件
  * @param BaseOperateItem   与 Parent 共享同一对 Context 的 Item 组件
  */
-export function createOperate(
+export function createOperateIndependent(
   BaseOperateParent: ComponentType<OperateParentProps>,
   BaseOperateItem: ComponentType<OperateItemProps>,
 ): (props: OperateProps) => ReactElement {

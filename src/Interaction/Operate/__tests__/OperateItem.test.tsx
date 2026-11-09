@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { createOperateItem } from '../OperateItem';
+import { createOperateItem } from '../createOperateItem';
 import { OperateConfigContext, OperateParentContext } from '../context';
 import type { OperateConfigContextValue, OperateParentContextValue } from '../context';
 import type { FieldNames } from '../types';
